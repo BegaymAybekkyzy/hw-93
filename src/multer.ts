@@ -7,13 +7,13 @@ export const imageStorage = () => {
   return {
     storage: diskStorage({
       destination: (req, _file, cb) => {
-        let imagePath = '/';
+        let imagePath = '';
 
         if (req.path === '/artists') {
           imagePath = 'photos';
         }
 
-        if (req.baseUrl === '/albums') {
+        if (req.path === '/albums') {
           imagePath = 'covers';
         }
         const destDir = path.join('public', imagePath);

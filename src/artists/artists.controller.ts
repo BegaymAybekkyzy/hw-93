@@ -48,7 +48,8 @@ export class ArtistsController {
   }
 
   @Delete(':id')
-  deleteArtist(@Param('id') id: string) {
-    return this.artistModel.findByIdAndDelete(id);
+  async deleteArtist(@Param('id') id: string) {
+    await this.artistModel.findByIdAndDelete(id);
+    return { message: 'Artist deleted' };
   }
 }
