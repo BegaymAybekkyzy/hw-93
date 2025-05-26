@@ -17,15 +17,19 @@ export class TokenAuthGuard implements CanActivate {
       return false;
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { _id: string };
-    const user = await this.userModel.findOne({ _id: decoded._id, token });
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+      const user = await this.userModel.findOne({ _id: decoded.id, token });
 
-    if (!user) {
+      if (!user) {
+        return false;
+      }
+
+      request.user = user;
+
+      return true;
+    } catch {
       return false;
     }
-
-    request.user = user;
-
-    return true;
   }
 }
